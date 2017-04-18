@@ -1,0 +1,22 @@
+{
+    "name": "danj/spotify-cli-remote",
+    "description": "A CLI tool for controlling Spotify on all platforms",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dan Johnson",
+            "email": "dan@danj.eu"
+        }
+    ],
+    "require": {
+        "symfony/console": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Danj\\Spotify\\": "src/"
+        }
+    },
+	"bin": [
+		"spotify"
+	]
+}
