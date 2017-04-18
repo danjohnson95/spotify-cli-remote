@@ -9,7 +9,7 @@ A CLI tool for controlling Spotify playback on **any** platform
 
 ## Installation
 
-### Composer *
+### Composer
 
     $ composer global require danj/spotify-cli-remote
 
@@ -17,7 +17,7 @@ Oh, and ensure that your composer vendor/bin directory is in your PATH:
 
 	$ export PATH=~/.composer/vendor/bin:$PATH
 
-### Build from source *
+### Build from source
 
     $ git clone https://github.com/danjohnson95/spotify-cli-remote
 
