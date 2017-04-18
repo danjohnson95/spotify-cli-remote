@@ -43,24 +43,52 @@ class Cache
      * Stores a value in the cache under the key specified
      * @param mixed $key
      * @param mixed $value
-     * @return void
+     * @return $this
      */
     public function store($key, $value)
     {
         $this->file->$key = $value;
+		return $this;
     }
 
     /**
      * Stores multiple values in the cache at a time
      * @param array
-     * @return void
+     * @return $this
      */
     public function storeMany(array $values)
     {
         foreach($values as $key=>$value){
             $this->store($key, $value);
         }
+		return $this;
     }
+
+	/**
+	 * Removes a key and value from the cache
+	 * @param mixed $key
+	 * @return $this
+	 */
+	 public function destroy($key)
+	 {
+	 	if(property_exists($this->file, $key)){
+		 	unset($this->file->$key);
+		}
+		return $this;
+	 }
+
+	 /**
+	  * Removes multiple values from the cache at a time
+	  * @param array
+	  * @return $this
+	  */
+	  public function destroyMany(array $keys)
+	  {
+		  foreach($keys as $key){
+			  $this->destroy($key);
+		  }
+		  return $this;
+	  }
 
     /**
      * Ends the instance of the cache

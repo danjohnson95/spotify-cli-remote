@@ -19,12 +19,13 @@ use Danj\Spotify\Application;
 $app = new Application();
 
 $app->start([
-    Danj\Spotify\Commands\Auth::class,
+    Danj\Spotify\Commands\Auth\Login::class,
+	Danj\Spotify\Commands\Auth\Logout::class,
     Danj\Spotify\Commands\Playback\Pause::class,
     Danj\Spotify\Commands\Playback\Play::class,
     Danj\Spotify\Commands\Playback\Next::class,
     Danj\Spotify\Commands\Playback\Previous::class,
-    Danj\Spotify\Commands\Playback\Volume::class
+    Danj\Spotify\Commands\Playback\Current::class
 
 ]);
 

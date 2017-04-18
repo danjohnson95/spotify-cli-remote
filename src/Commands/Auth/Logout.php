@@ -1,4 +1,4 @@
-<?php namespace Danj\Spotify\Commands;
+<?php namespace Danj\Spotify\Commands\Auth;
 
 use Danj\Spotify\AuthHelper;
 use Danj\Spotify\AuthenticationException;
@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class Auth extends Command
+class Logout extends Command
 {
     /**
      * Creates a new instance of the Auth command
@@ -25,9 +25,9 @@ class Auth extends Command
      */
     protected function configure()
     {
-        $this->setName('login')
-             ->setDescription('Allows the user to link their Spotify account')
-             ->setHelp('This command allows you to authenticate the Spotify CLI Remote with your Spotify account');
+        $this->setName('logout')
+             ->setDescription('Allows the user to unlink their Spotify account')
+             ->setHelp('This command allows you to log out of your Spotify account');
     }
 
     /**
@@ -42,14 +42,13 @@ class Auth extends Command
         $this->input = $input;
 
         if (!$this->auth->isAuthorised()) {
-            $this->getAuthorisation();
+			$this->output->writeln('');
+			$this->output->writeln('--------------------------------------------------------------');
+			$this->output->writeln('| <info>You\'re not logged in!</info>');
+			$this->output->writeln('--------------------------------------------------------------');
+			$this->output->writeln('');
         }else{
-			$this->output->writeln('');
-			$this->output->writeln('--------------------------------------------------------------');
-			$this->output->writeln('| <info>You\'re already authenticated!</info>');
-			$this->output->writeln('| Use the <comment>list</comment> command to see available commands');
-			$this->output->writeln('--------------------------------------------------------------');
-			$this->output->writeln('');
+			$this->logOut();
 		}
     }
 
@@ -58,13 +57,9 @@ class Auth extends Command
      * from the user will be requested
      * @return void
      */
-    private function getAuthorisation()
+    private function logOut()
     {
-        if($this->auth->attemptOrRefreshAuthentication()){
-            return true;
-        }else{
-            $this->requestAuthorisationFromUser();
-        }
+        $this->auth->logOut();
     }
 
     /**

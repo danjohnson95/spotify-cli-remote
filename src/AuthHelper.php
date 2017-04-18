@@ -41,6 +41,19 @@ class AuthHelper{
         return $this->cache;
     }
 
+	/**
+	 * Logs the user out by destroying their stored tokens
+	 * @return void
+	 */
+	 public function logOut()
+	 {
+		 $this->cache->destroyMany([
+			 'access_token',
+			 'refresh_token',
+			 'expires_at'
+		 ]);
+	 }
+
     /**
      * Do they have a valid access token? If not, do they have a refresh token?
      * If so, try to refresh it.

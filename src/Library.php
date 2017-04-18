@@ -88,21 +88,27 @@ class Library{
 	{
         $this->callApi('/v1/me/player/previous', 'POST');
     }
-	
+
 	public function setVolume($vol){
 		// TODO: Validate.
 		//
-		$resp = $this->callApi('/v1/recommendations?seed_genres=edm,progressive-house,summer,synth-pop,indie&target_tempo=195', 'GET');
-		foreach($resp->tracks as $track){
-			echo $track->name.PHP_EOL;
-		}
-		//print_r($resp);
-		//
-		//
+
 		// $this->callApi('/v1/me/player/volume', 'PUT', [
 		//     'volume_percent' => $vol
 		// ]);
 	}
+
+	public function current(){
+		return $this->callApi('/v1/me/player/currently-playing', 'GET');
+	}
+
+	//$resp = $this->callApi('/v1/recommendations?seed_genres=edm,progressive-house,summer,synth-pop,indie&target_tempo=195', 'GET');
+	//foreach($resp->tracks as $track){
+	//	echo $track->name.PHP_EOL;
+	//}
+	//print_r($resp);
+	//
+	//
 
 
 }
