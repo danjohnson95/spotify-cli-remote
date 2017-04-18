@@ -1,6 +1,5 @@
 <?php namespace Danj\Spotify;
 
-use stdClass;
 use Danj\Spotify\Http;
 use Danj\Spotify\Cache;
 
@@ -18,6 +17,10 @@ class AuthHelper{
      */
     protected $baseUrl = "http://spotify-cli-remote.danjohnson.xyz";
 
+	/**
+	 * Creates a new instance of the AuthHelper
+	 * @return void
+	 */
     public function __construct()
     {
         $this->cache = new Cache;
@@ -57,7 +60,7 @@ class AuthHelper{
     /**
      * Do they have a valid access token? If not, do they have a refresh token?
      * If so, try to refresh it.
-     * @return boolean
+     * @return bool
      */
     public function attemptOrRefreshAuthentication()
     {
@@ -82,8 +85,8 @@ class AuthHelper{
 
     /**
      * Returns a unix timestamp of now, plus the number of seconds specified.
-     * @param  integer $seconds
-     * @return integer
+     * @param  int $seconds
+     * @return int
      */
     private function calculateExpiryTimeFromNow($seconds)
     {
@@ -114,6 +117,10 @@ class AuthHelper{
         return $resp;
     }
 
+	/**
+	 * Requests a new access token from the Spotify API using the refresh token
+	 * @return \stdClass
+	 */
     public function requestAccessTokenFromRefreshToken()
     {
         $req = new Http;
@@ -142,7 +149,14 @@ class AuthHelper{
         return true;
     }
 
-    private function handleAPIResponseErrors(stdClass $resp)
+	/**
+	 * Handles any errors that may come back from the Spotify API and throws
+	 * relevant exceptions to describe the error.
+	 * @param \stdClass $resp The response from the API
+	 * @throws \Danj\Spotify\AuthenticationException
+	 * @return void
+	 */
+    private function handleAPIResponseErrors($resp)
     {
         if (property_exists($resp, "error")) {
             throw new AuthenticationException($resp->error_description);
@@ -154,7 +168,7 @@ class AuthHelper{
 
     /**
      * Checks if the user has a valid access token
-     * @return boolean
+     * @return bool
      */
     public function isAuthorised()
     {
@@ -164,7 +178,7 @@ class AuthHelper{
 
     /**
      * Returns whether or not a refresh token exists in the cache
-     * @return boolean
+     * @return bool
      */
     public function hasRefreshToken()
     {
@@ -192,7 +206,7 @@ class AuthHelper{
     /**
      * Retrieves the time when the access token expires from the cache, as a
      * unix timestamp
-     * @return integer
+     * @return int
      */
     public function getAccessTokenExpiryTime()
     {
